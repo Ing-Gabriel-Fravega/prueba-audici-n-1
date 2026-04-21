@@ -12,8 +12,8 @@ window.MathJax = {
 </script>
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
-<!-- Plotly -->
-<script defer src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<!-- Plotly (versión fija, más estable) -->
+<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
 
 <style>
 body {
@@ -35,6 +35,11 @@ h1, h2 { text-align: center; }
   background: #111;
   color: #0f0;
   padding: 15px;
+  font-weight: bold;
+}
+.error {
+  color: red;
+  text-align: center;
   font-weight: bold;
 }
 </style>
@@ -67,6 +72,8 @@ This work demonstrates that observed interaural asymmetries in neonatal DPOAE or
 <div id="plot2" class="plot"></div>
 </div>
 
+<div id="error" class="error"></div>
+
 <div class="section conclusion">
 FINAL CONCLUSION:<br>
 ✔ Bilateral cochlear function is symmetric<br>
@@ -77,45 +84,62 @@ FINAL CONCLUSION:<br>
 </div>
 
 <script>
+
+function waitForPlotly(callback) {
+  if (typeof Plotly !== "undefined") {
+    callback();
+  } else {
+    setTimeout(() => waitForPlotly(callback), 50);
+  }
+}
+
 document.addEventListener("DOMContentLoaded", function() {
 
-  // Frequency vector
-  let f = [];
-  for (let i = 1000; i <= 6000; i += 5) { f.push(i); }
+  waitForPlotly(function() {
 
-  // Transfer function model
-  function H(f, f0, Q){
-    return 1 / Math.sqrt(Math.pow(1 - Math.pow(f/f0,2),2) + Math.pow(f/(Q*f0),2));
-  }
+    try {
 
-  // Generate curves
-  let HL = f.map(x => 20*Math.log10(H(x,5700,3.5)));
-  let HR = f.map(x => 20*Math.log10(H(x,5200,2.8)));
+      let f = [];
+      for (let i = 1000; i <= 6000; i += 5) { f.push(i); }
 
-  // Plot 1
-  Plotly.newPlot('plot1', [
-    {x: f, y: HL, name: 'Left Ear'},
-    {x: f, y: HR, name: 'Right Ear'}
-  ], {
-    title: 'External Transfer Function (Bode Magnitude)',
-    xaxis: {title: 'Frequency (Hz)'},
-    yaxis: {title: 'Magnitude (dB)'}
-  });
+      function H(f, f0, Q){
+        return 1 / Math.sqrt(Math.pow(1 - Math.pow(f/f0,2),2) + Math.pow(f/(Q*f0),2));
+      }
 
-  // Reconstruction
-  let HR_corr = HL;
+      let HL = f.map(x => 20*Math.log10(H(x,5700,3.5)));
+      let HR = f.map(x => 20*Math.log10(H(x,5200,2.8)));
 
-  // Plot 2
-  Plotly.newPlot('plot2', [
-    {x: f, y: HL, name: 'Left Ear'},
-    {x: f, y: HR_corr, name: 'Right Ear (Corrected)', line: {dash: 'dot'}}
-  ], {
-    title: 'Cochlear Reconstruction (Symmetry)',
-    xaxis: {title: 'Frequency (Hz)'},
-    yaxis: {title: 'Magnitude (dB)'}
+      // Plot 1
+      Plotly.newPlot('plot1', [
+        {x: f, y: HL, name: 'Left Ear'},
+        {x: f, y: HR, name: 'Right Ear'}
+      ], {
+        title: 'External Transfer Function (Bode Magnitude)',
+        xaxis: {title: 'Frequency (Hz)'},
+        yaxis: {title: 'Magnitude (dB)'}
+      });
+
+      // Plot 2
+      let HR_corr = HL;
+
+      Plotly.newPlot('plot2', [
+        {x: f, y: HL, name: 'Left Ear'},
+        {x: f, y: HR_corr, name: 'Right Ear (Corrected)', line: {dash: 'dot'}}
+      ], {
+        title: 'Cochlear Reconstruction (Symmetry)',
+        xaxis: {title: 'Frequency (Hz)'},
+        yaxis: {title: 'Magnitude (dB)'}
+      });
+
+    } catch (e) {
+      document.getElementById("error").innerText = "ERROR: " + e.message;
+      console.error(e);
+    }
+
   });
 
 });
+
 </script>
 
 </body>
