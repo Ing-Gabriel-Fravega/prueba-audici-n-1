@@ -51,14 +51,15 @@ h1, h2 { text-align: center; }
   text-align: center;
   font-weight: bold;
 }
-/* Contenedor específico para el diagrama Mermaid */
+/* Contenedor específico para el diagrama Mermaid con mayor altura y scroll */
 .mermaid-container {
   width: 100%;
+  min-height: 600px;
   background: #fafafa;
   border: 1px solid lightgray;
   border-radius: 4px;
   padding: 20px;
-  overflow-x: auto;
+  overflow: auto;
   text-align: center;
 }
 </style>
@@ -91,13 +92,13 @@ This work demonstrates that observed interaural asymmetries in neonatal DPOAE or
 <div id="plot2" class="plot"></div>
 </div>
 
-<!-- Contenedor para Vis Network (Agrandado a 850px) -->
+<!-- Contenedor para Vis Network -->
 <div class="section">
 <h2>3. Network Topology</h2>
 <div id="mynetwork" style="width: 100%; height: 850px; border: 1px solid lightgray; background: #fff;"></div>
 </div>
 
-<!-- Diagrama Mermaid dentro de un contenedor prolijo -->
+<!-- Diagrama Mermaid dentro de un contenedor ampliado -->
 <div class="section">
 <h2>4. System Architecture Map</h2>
 <div class="mermaid-container">
