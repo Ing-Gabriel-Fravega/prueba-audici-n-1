@@ -64,12 +64,12 @@ h1, h2 { text-align: center; }
 /* Contenedor con gran altura y scroll bidimensional para evitar letras diminutas */
 .mermaid-container {
   width: 100%;
-  height: 1200px; /* Altura generosa (aproximadamente tres veces la original) */
+  height: 1200px;
   background: #fafafa;
   border: 1px solid lightgray;
   border-radius: 4px;
   padding: 20px;
-  overflow: auto; /* Permite hacer scroll tanto horizontal como vertical cómodamente */
+  overflow: auto;
   text-align: center;
 }
 
@@ -115,7 +115,7 @@ This work demonstrates that observed interaural asymmetries in neonatal DPOAE or
 <div id="mynetwork" style="width: 100%; height: 850px; border: 1px solid lightgray; background: #fff;"></div>
 </div>
 
-<!-- Diagrama Mermaid dentro de un contenedor de gran altura (1200px) -->
+<!-- Diagrama Mermaid actualizado con Microsoft y Amazon -->
 <div class="section">
 <h2>4. System Architecture Map</h2>
 <div class="mermaid-container">
@@ -144,6 +144,8 @@ graph LR
     NVDA[10. Nvidia]:::tech
     PLTR[11. Palantir]:::tech
     CLOUD[12. La Nube de Tecnológicas]:::cloud
+    MSFT[13. Microsoft]:::tech
+    AMZN[14. Amazon]:::tech
     GOV[15. Entidades Paragubernamentales / Agencias de Seguridad EE.UU.]:::gov
 
     %% Relaciones e Interacciones del Big Three (Control de Capital Global)
@@ -152,6 +154,8 @@ graph LR
     BT -->|Grandes paquetes accionarios institucionales| AAPL
     BT -->|Inversión institucional clave| META
     BT -->|Soporte financiero para infraestructura pesada| NVDA
+    BT -->|Soporte financiero y accionario masivo| MSFT
+    BT -->|Inversión institucional clave| AMZN
     BT -->|Alineación corporativa y de gobernanza global| CLOUD
 
     %% Ecosistema Geográfico y Académico
@@ -169,6 +173,8 @@ graph LR
     WS -->|Inyección de capital bursátil| AAPL
     WS -->|Inversión institucional| META
     WS -->|Financiación de infraestructura de IA| NVDA
+    WS -->|Inversión en software e IA| MSFT
+    WS -->|Inversión masiva en comercio y nube| AMZN
     WS -->|Capital de riesgo y defensa| PLTR
 
     %% Empresas dentro de Silicon Valley y la Nube
@@ -176,16 +182,22 @@ graph LR
     AAPL -->|Parte de| SV
     META -->|Parte de| SV
     IX -->|Ecosistema de medios y tech| SV
+    MSFT -->|Innovación de software y sistemas| SV
+    AMZN -->|Ecosistema de comercio y tech| SV
     NVDA -->|Hardware base para| CLOUD
     PLTR -->|Big Data e Inteligencia| CLOUD
     
     GOOG -->|Alimenta y compone| CLOUD
     META -->|Alimenta y compone| CLOUD
+    MSFT -->|Alimenta y compone| CLOUD
+    AMZN -->|Alimenta y compone| CLOUD
 
     %% Interacción con el Sector Gubernamental / Seguridad
     PLTR -->|Contratos de defensa, inteligencia y análisis de datos| GOV
     GOOG -->|Contratos de computación y proyectos de IA/Defensa| GOV
     NVDA -->|Suministro de GPUs para supercomputación e IA estatal| GOV
+    MSFT -->|Contratos de software y nube para defensa| GOV
+    AMZN -->|Infraestructura AWS para inteligencia y defensa| GOV
     CLOUD -->|Infraestructura de datos y ciberseguridad| GOV
     WS -->|Alineación geopolítica y económica| GOV
     SV -->|Desarrollo estratégico de tecnologías duales| GOV
