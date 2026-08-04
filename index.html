@@ -12,7 +12,7 @@ window.MathJax = {
 </script>
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
-<!-- Plotly (versión fija, más estable) -->
+<!-- Plotly -->
 <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
 
 <style>
@@ -43,38 +43,6 @@ h1, h2 { text-align: center; }
   font-weight: bold;
 }
 </style>
-
-
-----------------------------------------
-  <div id="mynetwork" style="width: 100%; height: 600px; border: 1px solid lightgray;"></div>
-
-  <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
-
-  // 1. Identificamos el contenedor donde va el gráfico
-var container = document.getElementById('mynetwork');
-
-// 2. Juntamos tus nodos y aristas (edges) en el objeto de datos
-var data = {
-    nodes: nodes, // Acá van tus variables de nodos/subgrupos
-    edges: edges  // Acá van las conexiones
-};
-
-// 3. Opciones de configuración (puede ir vacío o con estilos)
-var options = {};
-
-// 4. ¡Renderizamos el gráfico!
-var network = new vis.Network(container, data, options);
-
-<script type="module">
-  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-  mermaid.initialize({ startOnLoad: true });
-</script>
-
---------------------------------------------------------------------
-
-  
-
-  
 </head>
 
 <body>
@@ -116,7 +84,6 @@ FINAL CONCLUSION:<br>
 </div>
 
 <script>
-
 function waitForPlotly(callback) {
   if (typeof Plotly !== "undefined") {
     callback();
@@ -126,11 +93,8 @@ function waitForPlotly(callback) {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-
   waitForPlotly(function() {
-
     try {
-
       let f = [];
       for (let i = 1000; i <= 6000; i += 5) { f.push(i); }
 
@@ -167,87 +131,9 @@ document.addEventListener("DOMContentLoaded", function() {
       document.getElementById("error").innerText = "ERROR: " + e.message;
       console.error(e);
     }
-
   });
-
 });
-
 </script>
-
-
-------------------------------------
-graph TD
-    %% Estilos de Nodos
-    classDef region fill:#f9f,stroke:#333,stroke-width:2px;
-    classDef bigthree fill:#fcc,stroke:#333,stroke-width:3px;
-    classDef finance fill:#bbf,stroke:#333,stroke-width:2px;
-    classDef academic fill:#bfb,stroke:#333,stroke-width:2px;
-    classDef tech fill:#ff9,stroke:#333,stroke-width:2px;
-    classDef cloud fill:#fbb,stroke:#333,stroke-width:2px;
-    classDef gov fill:#d9d9d9,stroke:#333,stroke-width:2px;
-
-    %% Definición de Conjuntos / Nodos
-    BT[El Big Three: BlackRock, State Street, Vanguard]:::bigthree
-    SV[1. Silicon Valley]:::region
-    WS[2. Wall Street]:::finance
-    HU[3. Harvard University]:::academic
-    MIT[4. MIT]:::academic
-    ST[5. Stanford]:::academic
-    GOOG[6. Google]:::tech
-    AAPL[7. Apple]:::tech
-    META[8. Meta]:::tech
-    IX[9. IX / X antes Twitter]:::tech
-    NVDA[10. Nvidia]:::tech
-    PLTR[11. Palantir]:::tech
-    CLOUD[12. La Nube de Tecnológicas]:::cloud
-    GOV[15. Entidades Paragubernamentales / Agencias de Seguridad EE.UU.]:::gov
-
-    %% Relaciones e Interacciones del Big Three (Control de Capital Global)
-    BT -->|Control masivo de acciones y liquidez sistémica| WS
-    BT -->|Participación accionaria mayoritaria cruzada| GOOG
-    BT -->|Grandes paquetes accionarios institucionales| AAPL
-    BT -->|Inversión institucional clave| META
-    BT -->|Soporte financiero para infraestructura pesada| NVDA
-    BT -->|Alineación corporativa y de gobernanza global| CLOUD
-
-    %% Ecosistema Geográfico y Académico
-    ST -->|Nutre de talento e investigación| SV
-    MIT -->|Investigación de punta y talento IA| SV
-    HU -->|Liderazgo ejecutivo, legal y financiero| WS
-    MIT -->|Spin-offs tecnológicas| CLOUD
-    ST -->|Cuna de fundadores| GOOG
-    ST -->|Cuna de fundadores| META
-    ST -->|Innovación en semiconductores| NVDA
-
-    %% Financiación y Capital (Wall Street)
-    WS -->|Venture Capital e Inversión Masiva| SV
-    WS -->|Financiación de OPIs y expansión| GOOG
-    WS -->|Inyección de capital bursátil| AAPL
-    WS -->|Inversión institucional| META
-    WS -->|Financiación de infraestructura de IA| NVDA
-    WS -->|Capital de riesgo y defensa| PLTR
-
-    %% Empresas dentro de Silicon Valley y la Nube
-    GOOG -->|Parte de| SV
-    AAPL -->|Parte de| SV
-    META -->|Parte de| SV
-    IX -->|Ecosistema de medios y tech| SV
-    NVDA -->|Hardware base para| CLOUD
-    PLTR -->|Big Data e Inteligencia| CLOUD
-    
-    GOOG -->|Alimenta y compone| CLOUD
-    META -->|Alimenta y compone| CLOUD
-
-    %% Interacción con el Sector Gubernamental / Seguridad
-    PLTR -->|Contratos de defensa, inteligencia y análisis de datos| GOV
-    GOOG -->|Contratos de computación y proyectos de IA/Defensa| GOV
-    NVDA -->|Suministro de GPUs para supercomputación e IA estatal| GOV
-    CLOUD -->|Infraestructura de datos y ciberseguridad| GOV
-    WS -->|Alineación geopolítica y económica| GOV
-    SV -->|Desarrollo estratégico de tecnologías duales| GOV
-    BT -->|Confluencia en políticas macroeconómicas y estatales| GOV
-
-  ----------------------------------------------------------------------
 
 </body>
 </html>
