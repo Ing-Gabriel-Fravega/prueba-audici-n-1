@@ -45,12 +45,34 @@ h1, h2 { text-align: center; }
 </style>
 
 
+----------------------------------------
+  <div id="mynetwork" style="width: 100%; height: 600px; border: 1px solid lightgray;"></div>
+
+  <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+
+  // 1. Identificamos el contenedor donde va el gráfico
+var container = document.getElementById('mynetwork');
+
+// 2. Juntamos tus nodos y aristas (edges) en el objeto de datos
+var data = {
+    nodes: nodes, // Acá van tus variables de nodos/subgrupos
+    edges: edges  // Acá van las conexiones
+};
+
+// 3. Opciones de configuración (puede ir vacío o con estilos)
+var options = {};
+
+// 4. ¡Renderizamos el gráfico!
+var network = new vis.Network(container, data, options);
+
 <script type="module">
   import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
   mermaid.initialize({ startOnLoad: true });
 </script>
 
+--------------------------------------------------------------------
 
+  
 
   
 </head>
@@ -153,7 +175,7 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 
 
-
+------------------------------------
 graph TD
     %% Estilos de Nodos
     classDef region fill:#f9f,stroke:#333,stroke-width:2px;
@@ -225,7 +247,7 @@ graph TD
     SV -->|Desarrollo estratégico de tecnologías duales| GOV
     BT -->|Confluencia en políticas macroeconómicas y estatales| GOV
 
-  
+  ----------------------------------------------------------------------
 
 </body>
 </html>
