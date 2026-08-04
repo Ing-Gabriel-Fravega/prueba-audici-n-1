@@ -18,17 +18,17 @@ window.MathJax = {
 <!-- Vis Network (Librería) -->
 <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 
-<!-- Mermaid (Librería) - Configuración para orientación horizontal (LR) y autoajuste -->
+<!-- Mermaid (Librería) - Configuración ampliada para mejor legibilidad -->
 <script type="module">
   import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
   mermaid.initialize({ 
     startOnLoad: true,
     securityLevel: 'loose',
     flowchart: {
-      useMaxWidth: true,
+      useMaxWidth: false,
       htmlLabels: true,
-      nodeSpacing: 30,
-      rankSpacing: 40
+      nodeSpacing: 50,
+      rankSpacing: 80
     }
   });
 </script>
@@ -61,22 +61,23 @@ h1, h2 { text-align: center; }
   font-weight: bold;
 }
 
-/* Contenedor flexible con scroll horizontal y vertical cómodo */
+/* Contenedor con gran altura y scroll bidimensional para evitar letras diminutas */
 .mermaid-container {
   width: 100%;
-  max-height: 700px;
+  height: 1200px; /* Altura generosa (aproximadamente tres veces la original) */
   background: #fafafa;
   border: 1px solid lightgray;
   border-radius: 4px;
   padding: 20px;
-  overflow: auto;
+  overflow: auto; /* Permite hacer scroll tanto horizontal como vertical cómodamente */
   text-align: center;
 }
 
-/* Permitir que el SVG se adapte sin cortes laterales forzados */
+/* Forzar al SVG a mantener un tamaño grande para que las letras se lean perfectamente */
 .mermaid svg {
-  max-width: 100% !important;
-  height: auto !important;
+  height: 100% !important;
+  width: auto !important;
+  max-width: none !important;
 }
 </style>
 </head>
@@ -114,7 +115,7 @@ This work demonstrates that observed interaural asymmetries in neonatal DPOAE or
 <div id="mynetwork" style="width: 100%; height: 850px; border: 1px solid lightgray; background: #fff;"></div>
 </div>
 
-<!-- Diagrama Mermaid cambiado a orientacion horizontal (LR) para evitar el efecto "regla vertical infinita" -->
+<!-- Diagrama Mermaid dentro de un contenedor de gran altura (1200px) -->
 <div class="section">
 <h2>4. System Architecture Map</h2>
 <div class="mermaid-container">
