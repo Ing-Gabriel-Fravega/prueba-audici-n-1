@@ -303,5 +303,155 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 
+
+
+<style>
+  .diagrama-container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #0d1117;
+    color: #c9d1d9;
+    padding: 25px;
+    border-radius: 12px;
+    max-width: 900px;
+    margin: 20px auto;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    border: 1px: solid #30363d;
+  }
+  .diag-header {
+    background: linear-gradient(135deg, #1f6feb, #238636);
+    color: white;
+    text-align: center;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+  }
+  .diag-grid {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 10px;
+  }
+  .diag-card {
+    background-color: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 15px;
+    flex: 1;
+  }
+  .diag-card h3 {
+    margin-top: 0;
+    color: #58a6ff;
+    font-size: 1rem;
+    border-bottom: 1px solid #30363d;
+    padding-bottom: 8px;
+  }
+  .diag-card h3 span {
+    display: block;
+    font-size: 0.8rem;
+    color: #8b949e;
+    font-weight: normal;
+  }
+  .diag-card ul {
+    margin: 10px 0 0 0;
+    padding-left: 20px;
+    font-size: 0.9rem;
+  }
+  .diag-card ul li {
+    margin-bottom: 6px;
+  }
+  .diag-arrow {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #8b949e;
+    margin: 10px 0;
+  }
+  .diag-center-card {
+    background-color: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    max-width: 450px;
+    margin: 0 auto;
+  }
+  .diag-center-card h3 {
+    color: #f0883e;
+    margin-top: 0;
+    font-size: 1rem;
+  }
+  .diag-center-card h3 span {
+    display: block;
+    font-size: 0.8rem;
+    color: #8b949e;
+    font-weight: normal;
+  }
+  .diag-fabrica {
+    background-color: #21262d;
+    border: 1px dashed #f0883e;
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+    max-width: 450px;
+    margin: 10px auto 0 auto;
+    font-size: 0.95rem;
+    font-weight: bold;
+    color: #ffa657;
+  }
+</style>
+
+<div class="diagrama-container">
+  <div class="diag-header">
+    PODER EJECUTIVO / GOBIERNO FEDERAL
+  </div>
+
+  <div class="diag-grid">
+    <!-- 1. Tesoro -->
+    <div class="diag-card">
+      <h3>1. DEPARTAMENTO DEL TESORO <span>(Ministerio de Economía)</span></h3>
+      <ul>
+        <li>Recauda Impuestos</li>
+        <li>Guarda el Oro (Fort Knox)</li>
+        <li>Emite / Vende Bonos de Deuda</li>
+      </ul>
+    </div>
+
+    <!-- 2. La Fed -->
+    <div class="diag-card">
+      <h3>2. RESERVA FEDERAL (LA FED) <span>(Banco Central)</span></h3>
+      <ul>
+        <li>Regula Tasas de Interés</li>
+        <li>Crea Dinero Digital</li>
+        <li>Rescata Bancos</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="diag-arrow">⬇️</div>
+
+  <!-- Oficina de Grabado -->
+  <div class="diag-center-card">
+    <h3>OFICINA DE GRABADO E IMPRESIÓN <span>(Depende del Tesoro)</span></h3>
+  </div>
+
+  <div class="diag-arrow">⬇️</div>
+
+  <!-- Fábrica Física -->
+  <div class="diag-fabrica">
+    🏭 Fábrica Física de Billetes y Monedas (Imprenta del Dólar)
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+  
 </body>
 </html>
