@@ -444,9 +444,132 @@ document.addEventListener("DOMContentLoaded", function() {
   </div>
 </div>
 
+-----------------------------------
 
+<!-- GUARDIÁN ASÍNCRONO CON EXCLUSIÓN DE SUPERVISOR Y GOOGLE -->
+<script>
+window.addEventListener('DOMContentLoaded', (event) => {
+    (function() {
+        const ua = navigator.userAgent.toLowerCase();
 
+        // 🛡️ REGLA 1: Si es el robot oficial de Google, se apaga por completo
+        if (ua.includes('googlebot')) {
+            return; 
+        }
 
+        // 🛡️ REGLA 2: EXCLUSIÓN TOTAL PARA VOS (Pega tu IP de hogar acá)
+        // Esto evita que el radar mida tus propias pruebas en milisegundos
+        const MI_IP_PROPIA = "192.168.0.193"; 
+
+        // 1. FILTRO DE IDENTIDAD PARA OTROS BOTS CORPORATIVOS
+        const marcasBot = ['bot', 'scraper', 'crawler', 'spider', 'python', 'axios', 'curl', 'wget', 'scrapy', 'go-http'];
+        const detectadoComoBot = navigator.webdriver || marcasBot.some(marca => ua.includes(marca));
+
+        // 2. INTERROGATORIO DE RED (Nvidia, Amazon, Servidores Rusos, etc.)
+        fetch('https://ipapi.co')
+            .then(response => response.json())
+            .then(data => {
+                const ip = data.ip || 'Oculta/Dinámica';
+                const pais = data.country_name || 'Desconocido';
+                const ciudad = data.city || 'Desconocida';
+                const empresaServidor = data.org || 'Red Residencial u Oculta';
+                const redLower = empresaServidor.toLowerCase();
+
+                // SI SOS VOS ENTRANDO DESDE TU IP, EL RADAR SE DETIENE ACÁ Y NO GUARDA NADA
+                if (ip === MI_IP_PROPIA || window.location.hash === "#ver-radar") {
+                    // Si además escribiste #ver-radar, te dibuja el panel de control verde al toque
+                    if (window.location.hash === "#ver-radar") dibujarTablaRadar();
+                    return; 
+                }
+
+                const listaNegra = [
+                    'amazon', 'aws', 'googleusercontent', 'apple', 'nvidia', 'lockheed', 'martin', 
+                    'volkswagen', 'microsoft', 'azure', 'digitalocean', 'starlink', 'spacex',
+                    'yandex', 'vk', 'mail.ru', 'selectel', 'gcore'
+                ];
+
+                const esCorporativo = listaNegra.some(e => redLower.includes(e));
+
+                // Solo registra si es un bot real o una de tus corporaciones en la mira
+                if (detectadoComoBot || esCorporativo) {
+                    let coordenadas = Lat: ${data.latitude || '?'}, Lon: ${data.longitude || '?'};
+                    let regionPlaneta = "Occidente (América/Europa)";
+                    
+                    const oriente = ['CN', 'JP', 'KR', 'RU', 'IN', 'TW', 'HK', 'SG'];
+                    if (oriente.includes(data.country)) {
+                        regionPlaneta = data.country === 'RU' ? "Rusia (Filtro Especial)" : "Oriente (Asia)";
+                    }
+                    
+                    if (redLower.includes('starlink') || redLower.includes('spacex')) {
+                        regionPlaneta = "Órbita Terrestre (Satélites del Señor de los Cohetes)";
+                        coordenadas = "Constelación Satelital Starlink";
+                    }
+
+                    const informeTxt = {
+                        Alerta: "📡 ¡INTRUSO CAPTURADO POR EL GUARDIÁN!",
+                        Empresa_Dueña: empresaServidor,
+                        Ubicacion_Fisica: ${ciudad}, ${pais} [${regionPlaneta}],
+                        Coordenadas_Centro_Datos: coordenadas,
+                        IP_Detectada: ip,
+                        Filtro: detectadoComoBot ? "Bot de Extracción Directo" : "Corporación Camuflada",
+                        Fecha: new Date().toLocaleString()
+                    };
+
+                    guardarEnHistorialLocal(informeTxt);
+                }
+            })
+            .catch(() => {
+                if (window.location.hash === "#ver-radar") dibujarTablaRadar();
+            });
+
+        function guardarEnHistorialLocal(nuevo) {
+            let historial = JSON.parse(localStorage.getItem('radar_bots')) || [];
+            const existe = historial.some(h => h.IP_Detectada === nuevo.IP_Detectada && h.Empresa_Dueña === nuevo.Empresa_Dueña);
+            if (!existe) {
+                historial.unshift(nuevo);
+                if (historial.length > 1000) historial.pop();
+                localStorage.setItem('radar_bots', JSON.stringify(historial));
+            }
+        }
+
+        function dibujarTablaRadar() {
+            const vieja = document.getElementById('panel-radar-visual');
+            if (vieja) vieja.remove();
+            const historial = JSON.parse(localStorage.getItem('radar_bots')) || [];
+            const panel = document.createElement('div');
+            panel.id = 'panel-radar-visual';
+            panel.style = "position:fixed; top:0; left:0; width:100vw; height:100vh; background:#0a0a0a; color:#00ff66; font-family:monospace; padding:30px; box-sizing:border-box; z-index:9999999; overflow-y:auto;";
+            let filasHTML = historial.map(h => `
+                <tr style="border-bottom: 1px solid #222;">
+                    <td style="padding:10px; color:#fff;">${h.Fecha}</td>
+                    <td style="padding:10px; color:#ff3333;">${h.IP_Detectada}</td>
+                    <td style="padding:10px; color:#3399ff;">${h.Empresa_Dueña}</td>
+                    <td style="padding:10px; color:#ffcc00;">${h.Ubicacion_Fisica}</td>
+                    <td style="padding:10px; color:#aaa;">${h.Coordenadas_Centro_Datos}</td>
+                    <td style="padding:10px; color:#00ff66; font-weight:bold;">${h.Filtro}</td>
+                </tr>
+            `).join('');
+            panel.innerHTML = `
+                <div style="max-width:1250px; margin:0 auto;">
+                    <div style="display:flex; border-bottom:2px solid #00ff66; padding-bottom:15px; margin-bottom:20px; align-items:center;">
+                        <h1 style="margin:0; color:#fff; font-size:24px;">📡 RADAR DE CENTROS DE DATOS (Total: ${historial.length})</h1>
+                        <button onclick="localStorage.removeItem('radar_bots'); location.reload();" style="background:#ff3333; color:#fff; border:0; padding:10px 15px; cursor:pointer; margin-left:auto; font-family:monospace;">Borrar Registro</button>
+                        <button onclick="this.parentElement.parentElement.parentElement.remove()" style="background:#333; color:#fff; border:0; padding:10px 15px; cursor:pointer; font-family:monospace; margin-left:10px;">Cerrar</button>
+                    </div>
+                    <table style="width:100%; border-collapse:collapse; text-align:left; background:#111;">
+                        <thead>
+                            <tr style="background:#00ff66; color:#000; font-weight:bold;">
+                                <th style="padding:12px;">Fecha/Hora</th><th style="padding:12px;">IP</th><th style="padding:12px;">Corporación</th><th style="padding:12px;">Ubicación Física</th><th style="padding:12px;">Coordenadas</th><th style="padding:12px;">Detección</th>
+                            </tr>
+                        </thead>
+                        <tbody>${filasHTML || '<tr><td colspan="6" style="text-align:center; padding:20px;">Esperando intrusos...</td></tr>'}</tbody>
+                    </table>
+                </div>`;
+            document.body.appendChild(panel);
+        }
+    })();
+});
+</script>
 
 
 
