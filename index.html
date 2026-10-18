@@ -470,7 +470,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         const detectadoComoBot = navigator.webdriver || marcasBot.some(marca => ua.includes(marca));
 
         // 2. INTERROGATORIO DE RED
-        fetch('https://ipapi.co')
+        fetch('fetch('https://ipapi.co/json/')')
             .then(response => response.json())
             .then(data => {
                 const ip = data.ip || 'Oculta/Dinámica';
