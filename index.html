@@ -449,7 +449,7 @@ document.addEventListener("DOMContentLoaded", function() {
 18/10/2026
   </p>
 -----------------------------------
-<!-- GUARDIÁN REPARADO CON RUTA JSON CORRECTA -->
+<!-- GUARDIÁN DE BOTS DEFINITIVO Y ARREGLADO -->
 <script>
 (function() {
     const MI_IP_PROPIA = "186.138.176.56"; 
@@ -467,14 +467,16 @@ document.addEventListener("DOMContentLoaded", function() {
     const marcasBot = ['bot', 'scraper', 'crawler', 'spider', 'python', 'axios', 'curl', 'wget', 'scrapy', 'go-http'];
     const detectadoComoBot = navigator.webdriver || marcasBot.some(marca => ua.includes(marca));
 
-    // 2. INTERROGATORIO DE RED (RUTA CORREGIDA)
-    fetch('https://ipapi.co')
+    // 2. INTERROGATORIO DE RED CON FORMATO JSON CORRECTO
+    fetch('http://ip-api.com')
         .then(response => response.json())
         .then(data => {
-            const ip = data.ip || 'Oculta';
+            if (data.status !== "success") return;
+            
+            const ip = data.query || 'Oculta';
             if (ip === MI_IP_PROPIA) return; 
 
-            const pais = data.country_name || 'Desconocido';
+            const pais = data.country || 'Desconocido';
             const empresaServidor = data.org || 'Red Residencial u Oculta';
             const redLower = empresaServidor.toLowerCase();
 
@@ -484,14 +486,14 @@ document.addEventListener("DOMContentLoaded", function() {
             ];
             const esCorporativo = listaNegra.some(e => redLower.includes(e));
 
-            // Si es un bot o una corporación, lo guardamos en la memoria del navegador
+            // Si es un bot o una corporación, lo guardamos SÍ O SÍ en la memoria
             if (detectadoComoBot || esCorporativo) {
                 const informeTxt = {
                     Fecha: new Date().toLocaleString(),
                     IP_Detectada: ip,
                     Empresa_Dueña: empresaServidor,
                     Ubicacion_Fisica: `${data.city || '?'}, ${pais}`,
-                    Coordenadas_Centro_Datos: `Lat: ${data.latitude || '?'}, Lon: ${data.longitude || '?'}`,
+                    Coordenadas_Centro_Datos: `Lat: ${data.lat || '?'}, Lon: ${data.lon || '?'}`,
                     Filtro: detectadoComoBot ? "Bot de Extracción Directo" : "Corporación Camuflada"
                 };
                 guardarEnHistorialLocal(informeTxt);
@@ -541,7 +543,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             <th style="padding:12px;">Fecha/Hora</th><th style="padding:12px;">IP</th><th style="padding:12px;">Corporación</th><th style="padding:12px;">Ubicación Física</th><th style="padding:12px;">Coordenadas</th><th style="padding:12px;">Detección</th>
                         </tr>
                     </thead>
-                    <tbody>${filasHTML || '<tr><td colspan="6" style="text-align:center; padding:20px; color:#aaa;">Esperando intrusos... Los datos comenzarán a aparecer aquí cuando los bots accedan al sitio.</td></tr>'}</tbody>
+                    <tbody>${filasHTML || '<tr><td colspan="6" style="text-align:center; padding:20px; color:#aaa;">Esperando intrusos... Los datos aparecerán aquí cuando los bots indexen el sitio clonado.</td></tr>'}</tbody>
                 </table>
             </div>`;
         
@@ -552,7 +554,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 })();
 </script>
-
   
   
 </body>
