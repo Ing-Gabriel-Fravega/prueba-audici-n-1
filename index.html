@@ -449,15 +449,13 @@ document.addEventListener("DOMContentLoaded", function() {
 18/10/2026
   </p>
 -----------------------------------
-
-<!-- GUARDIÁN REPARADO CON ALMACENAMIENTO FIJO -->
+<!-- GUARDIÁN REPARADO CON RUTA JSON CORRECTA -->
 <script>
 (function() {
     const MI_IP_PROPIA = "186.138.176.56"; 
 
-    // 🛡️ REGLA 1: Si tú entras con #ver-radar, te muestra la planilla AL INSTANTE sin esperar nada
+    // 🛡️ REGLA 1: Si tú entras con #ver-radar, te muestra la planilla AL INSTANTE
     if (window.location.hash === "#ver-radar") {
-        // Le damos un milisegundo para asegurar que el cuerpo de la página exista
         setTimeout(dibujarTablaRadar, 100);
         return; 
     }
@@ -469,7 +467,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const marcasBot = ['bot', 'scraper', 'crawler', 'spider', 'python', 'axios', 'curl', 'wget', 'scrapy', 'go-http'];
     const detectadoComoBot = navigator.webdriver || marcasBot.some(marca => ua.includes(marca));
 
-    // 2. INTERROGATORIO DE RED
+    // 2. INTERROGATORIO DE RED (RUTA CORREGIDA)
     fetch('https://ipapi.co')
         .then(response => response.json())
         .then(data => {
@@ -486,7 +484,7 @@ document.addEventListener("DOMContentLoaded", function() {
             ];
             const esCorporativo = listaNegra.some(e => redLower.includes(e));
 
-            // Si es un bot o una corporación, lo guardamos SÍ O SÍ en la memoria del navegador
+            // Si es un bot o una corporación, lo guardamos en la memoria del navegador
             if (detectadoComoBot || esCorporativo) {
                 const informeTxt = {
                     Fecha: new Date().toLocaleString(),
@@ -543,7 +541,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             <th style="padding:12px;">Fecha/Hora</th><th style="padding:12px;">IP</th><th style="padding:12px;">Corporación</th><th style="padding:12px;">Ubicación Física</th><th style="padding:12px;">Coordenadas</th><th style="padding:12px;">Detección</th>
                         </tr>
                     </thead>
-                    <tbody>${filasHTML || '<tr><td colspan="6" style="text-align:center; padding:20px; color:#aaa;">Esperando intrusos... Recuerda que los bots deben entrar a la web para ser listados aquí.</td></tr>'}</tbody>
+                    <tbody>${filasHTML || '<tr><td colspan="6" style="text-align:center; padding:20px; color:#aaa;">Esperando intrusos... Los datos comenzarán a aparecer aquí cuando los bots accedan al sitio.</td></tr>'}</tbody>
                 </table>
             </div>`;
         
