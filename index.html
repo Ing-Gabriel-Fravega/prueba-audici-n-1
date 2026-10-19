@@ -468,7 +468,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const detectadoComoBot = navigator.webdriver || marcasBot.some(marca => ua.includes(marca));
 
     // 2. INTERROGATORIO DE RED CON FORMATO JSON CORRECTO
-   fetch('http://ip-api.com**/JSON/**')
+   fetch('http://ip-api.com')
         .then(response => response.json())
         .then(data => {
             if (data.status !== "success") return;
